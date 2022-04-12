@@ -1,9 +1,23 @@
 import requests
 import json
+from tool.utils import check_config
+from importlib import import_module
 
 
-def qywx_push(content, config, title):
-    print(f'推送{title}任务结果')
+def push(configs, content, title):
+    for push in configs:
+        push_config = configs.get(push)
+        if check_config(push_config):
+            module = import_module('tool.push')
+            func = getattr(module, push)
+            func(push_config, content, title)
+        else:
+            print(f'{push} 推送配置文件未修改')
+            continue
+
+
+def qywx(config, content, title):
+    print(f'企业微信推送 {title}任务结果')
     qywx_corpid = config.get('corp_id')
     qywx_agentid = config.get('agent_id')
     qywx_corpsecret = config.get('corp_secret')
@@ -33,4 +47,37 @@ def qywx_push(content, config, title):
             },
         }
     requests.post(url=f"https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token={token}", data=json.dumps(data))
+    return
+
+
+def bark(config, content, title):
+    print(f'Bark推送 {title}任务结果')
+    url = config.get('url')
+    if not url.endswith("/"):
+        url += "/"
+    url = f"{url}{content}"
+    headers = {"Content-type": "application/x-www-form-urlencoded"}
+    requests.get(url=url, headers=headers)
+    return
+
+
+def telegram(config, content, title):
+    print(f'Telegram推送 {title}任务结果')
+    api_host = config.get('api_host')
+    proxy = config.get('proxy')
+    bot_token = config.get('bot_token')
+    user_id = config.get('user_id')
+    send_data = {"chat_id": user_id, "text": content, "disable_web_page_preview": "true"}
+    if api_host:
+        url = f"https://{api_host}/bot{bot_token}/sendMessage"
+    else:
+        url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
+    if proxy:
+        proxies = {
+            "http": proxy,
+            "https": proxy,
+        }
+    else:
+        proxies = None
+    requests.post(url=url, data=send_data, proxies=proxies)
     return

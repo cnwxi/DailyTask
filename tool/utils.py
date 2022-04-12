@@ -1,4 +1,4 @@
-import argparse
+from importlib import import_module
 
 import yaml
 
@@ -23,3 +23,16 @@ def get_cookies(cookies):
     else:
         cookies = {item.split("=")[0]: item.split("=")[1] for item in cookies.split(";")}
     return cookies
+
+def check_config(config):
+    for i in config:
+        if i is not None and 'your' not in config[i]:
+            return True
+        else:
+            return False
+
+
+def run_task(task,task_config):
+    module = import_module(f'tasks.{task}.{task}')
+    tmp_msg = module.Task(config=task_config).main()
+    return tmp_msg

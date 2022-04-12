@@ -1,18 +1,24 @@
-from importlib import import_module
-
-from tool.utils import get_configs
-from tool import push
+from tool.utils import get_configs, check_config, run_task
+from tool.push import push
 
 
 def main():
     configs = get_configs()
-    for i in configs.get('tasks'):
-        print(i)
-        module = import_module(f'tasks.{i}.{i}')
-        tmp_msg = module.Task(configs['tasks'][i]).main()
+    task_configs = configs.get('tasks')
+    push_configs = configs.get('push')
+    msg = []
+    for task in task_configs:
+        print(task)
+        task_config = task_configs[task]
+        if not check_config(task_config):
+            print(f'{task}-配置文件未修改')
+            continue
+        tmp_msg = run_task(task, task_config)
         print(tmp_msg)
-        push_config = configs.get('push').get('qywx')
-        push.qywx_push(content=tmp_msg, config=push_config, title=i)
+        msg.append([task, tmp_msg])
+    for task, tmp_msg in msg:
+        push(push_configs, tmp_msg, task)
+
 
 if __name__ == '__main__':
     main()
