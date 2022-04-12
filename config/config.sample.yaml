@@ -1,0 +1,17 @@
+push:
+  qywx:
+    corp_id: 'you corp_id'
+    agent_id: 'your agent_id'
+    corp_secret: 'your corp_secret'
+    touser: '@all'
+    type: 'text or textcard'
+tasks:
+  duokan:
+    cookies: 'your cookies'
+    get_free: True # 是否获取每日限免
+    more_task: True # 是否执行更多体验、下载任务
+  bilibili:
+    cookies: 'your cookies'
+    coin_num: 5 # 每日投币数量
+    coin_type: 1 # 随机投币或按关注人投币
+    silver2coin: true # 银瓜子兑硬币
