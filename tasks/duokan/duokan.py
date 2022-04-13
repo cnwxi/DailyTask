@@ -12,8 +12,8 @@ class Task:
 
     def __init__(self, task_config):
         self.config = task_config
-        self.get_free = config.get('get_free')
-        self.more_task = config.get('more_task')
+        self.get_free = self.config.get('get_free')
+        self.more_task = self.config.get('more_task')
         self.gift_code_list = gift_code_list
         self.code_list = code_list
         self.headers = {"Content-Type": "application/x-www-form-urlencoded; charset=utf-8"}

@@ -34,5 +34,5 @@ def check_config(config):
 
 def run_task(task,task_config):
     module = import_module(f'tasks.{task}.{task}')
-    tmp_msg = module.Task(config=task_config).main()
+    tmp_msg = module.Task(task_config=task_config).main()
     return tmp_msg
