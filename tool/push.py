@@ -5,6 +5,9 @@ from importlib import import_module
 
 
 def push(configs, content, title):
+    if configs is None:
+        print('未配置推送')
+        return
     for push in configs:
         push_config = configs.get(push)
         if check_config(push_config):
@@ -14,6 +17,13 @@ def push(configs, content, title):
         else:
             print(f'{push} 推送配置文件未修改')
             continue
+
+
+def server(config, content, title):
+    print(f"server 酱推送 {title}任务结果")
+    data = {"text": "每日签到", "desp": content.replace("\n", "\n\n")}
+    requests.post(url=f"https://sc.ftqq.com/{config.get('sendkey')}.send", data=data)
+    return
 
 
 def qywx(config, content, title):

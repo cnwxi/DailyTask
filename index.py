@@ -2,7 +2,7 @@ from tool.utils import get_configs, check_config, run_task
 from tool.push import push
 
 
-def main():
+def main_handler(event, context):
     configs = get_configs()
     task_configs = configs.get('tasks')
     push_configs = configs.get('push')
@@ -19,6 +19,5 @@ def main():
     for task, tmp_msg in msg:
         push(push_configs, tmp_msg, task)
 
-
 if __name__ == '__main__':
-    main()
+    main_handler(None,None)
