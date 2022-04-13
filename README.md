@@ -1,5 +1,6 @@
 <div align="center">
 <h1>DailyTask</h1>
+<p>by cnwxi</p>
 </div>
 
 ## 简介
