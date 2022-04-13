@@ -10,8 +10,8 @@ from tool.utils import get_cookies, get_configs
 class Task:
     name = "多看阅读"
 
-    def __init__(self, config):
-        self.config = config
+    def __init__(self, task_config):
+        self.config = task_config
         self.get_free = config.get('get_free')
         self.more_task = config.get('more_task')
         self.gift_code_list = gift_code_list
@@ -183,4 +183,4 @@ class Task:
 if __name__ == "__main__":
     config = get_configs("../../config/config.yaml")
     config = config['tasks']["duokan"]
-    print(Task(config=config).main())
+    print(Task(task_config=config).main())

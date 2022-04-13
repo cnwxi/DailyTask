@@ -10,8 +10,8 @@ class Task:
     name = "Bilibili"
 
     # TODO 待测试，需要大会员账号测试领取福利
-    def __init__(self, config: dict):
-        self.config = config
+    def __init__(self, task_config: dict):
+        self.config = task_config
 
     @staticmethod
     def get_nav(session):
@@ -292,7 +292,7 @@ class Task:
                         aid_list += tmplist
                         count += tmpcount
                         # aid_list += self.space_arc_search(session=session, uid=mid)
-                        if (count * rate) > coin_num:
+                        if (count // rate) >= coin_num:
                             print("已获取足够关注用户的视频")
                             break
             if coin_num > 0:
@@ -373,6 +373,7 @@ class Task:
 
 
 if __name__ == "__main__":
-    config = get_configs('../../config/config.yaml')
-    config = config['tasks']["bilibili"]
-    print(Task(config=config).main())
+    # config = get_configs('../../config/config.yaml')
+    # config = config['tasks']["bilibili"]
+    # print(Task(task_config=config).main())
+    print(13//5)
