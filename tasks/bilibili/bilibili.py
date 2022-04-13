@@ -295,6 +295,8 @@ class Task:
                         if (count // rate) >= coin_num:
                             print("已获取足够关注用户的视频")
                             break
+                # for i in aid_list:
+                #     print(i)
             if coin_num > 0:
                 for aid in aid_list[::-1]:
                     ret = self.coin_add(
@@ -373,7 +375,6 @@ class Task:
 
 
 if __name__ == "__main__":
-    # config = get_configs('../../config/config.yaml')
-    # config = config['tasks']["bilibili"]
-    # print(Task(task_config=config).main())
-    print(13//5)
+    config = get_configs('../../config/config.yaml')
+    config = config['tasks']["bilibili"]
+    print(Task(task_config=config).main())
